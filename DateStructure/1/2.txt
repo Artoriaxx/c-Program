@@ -1,0 +1,11 @@
+3
+jinan 0 0
+qingdao 5 5
+changsha 1 10
+I 1 shenzhen 2 3
+P
+U shenzhen 1 6
+F shenzhen
+P
+G 0 0 12
+B
