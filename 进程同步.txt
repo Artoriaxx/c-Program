@@ -1,0 +1,65 @@
+Semaphore mutex = 1, odd = 0, even = 0, empty = N;
+//mutex:互斥信号量
+//odd:共享缓冲区的奇数个数,P1和P2共享
+//even:共享缓冲区的偶数个数,P1和P3共享
+//empty:共享缓冲区的空位个数,P1,P2,P3共享
+P1() {
+    while (1) {
+        integer = produce();//生成一个整数
+        wait(empty);//申请一个共享缓冲区空位
+        wait(mutex);//申请控制对缓冲区的互斥访问
+        put();//放入缓冲区
+        signal(mutex);//释放对缓冲区的控制
+        if (integer % 2 == 0) signal(even);//偶数增加偶数个数,奇数则增加奇数个数
+        else signal(odd);
+    }
+}
+P2() {
+    while (1) {
+        wait(odd);//申请一个共享缓冲区的奇数个数
+        wait(mutex);//申请控制对缓冲区的互斥访问
+        getodd();//获取一个奇数
+        signal(mutex);//释放控制
+        signal(empty);//释放一个共享缓冲区单元
+        countodd();//统计奇数个数
+    }
+}
+P3() {
+    while (1) {
+        wait(even);//申请一个共享缓冲区的偶数个数
+        wait(mutex);//申请控制对缓冲区的互斥访问
+        geteven();//获取一个偶数
+        signal(mutex);//释放控制
+        signal(empty);//释放一个共享缓冲区单元
+        counteven();//统计偶数个数
+    }
+}
+
+Semaphore empty = 1, apple = 0, pear = 0;
+//empty:盘子的资源信号量,同时也是互斥信号量
+//apple:苹果的资源信号量,AC同步
+//pear:梨的资源信号量,BD同步
+PA() {
+    while (1) {
+        wait(empty);//申请向盘子放一个水果
+        signal(apple);//放入一个苹果
+    }
+}
+PB() {
+    while (1) {
+        wait(empty);//申请向盘子放一个水果
+        signal(pear);//放入一个梨
+    }
+}
+PC() {
+    while (1) {
+        wait(apple);//申请拿走一个苹果
+        signal(empty);//增加一个盘子空位
+    }
+}
+PD() {
+    while (1) {
+        wait(pear);//申请拿走一个梨
+        signal(empty);//增加一个盘子空位
+    }
+}
