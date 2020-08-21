@@ -1,11 +1,3 @@
-/*
- * @Descripttion: 
- * @version: 
- * @Author: Artoriax
- * @Date: 2020-03-31 08:24:35
- * @LastEditors: Artoriax
- * @LastEditTime: 2020-04-07 20:53:13
- */
 #include <bits/stdc++.h>
 using namespace std;
 int sz = 5;
@@ -50,6 +42,6 @@ int main() {
     n = read(); k = read();
     a = (int*)malloc((n + 1) * sizeof(int));
     for (int i = 1; i <= n; i++) a[i] = read();
-    printf("%d\n", findkth(a, 1, n, k + 1));
+    printf("%d\n", findkth(a, 1, n, k));
     return 0;
 }

@@ -10,11 +10,17 @@
 using namespace std;
 int main() {
 	srand(time(NULL));
-	int n = 1e5;
-	int k = rand() % n + 1;
-	printf("%d %d\n", n, k);
-	for (int i = 1; i <= n; i++) {
-		printf("%d ", (rand() % (n / 2)) + 1);
+	int t = 10;
+	printf("%d\n", t);
+	while (t--) {
+		int n = rand() % 10 + 1;
+		for (int i = 1; i <= n; i++) {
+			int x = rand() % 2;
+			if (x == 1) putchar('x');
+			else putchar('l');
+		}
+		puts("");
+
 	}
 	return 0;
 }

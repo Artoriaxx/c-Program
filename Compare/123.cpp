@@ -15,8 +15,7 @@ int main() {
 		system("other.exe < data.txt > other.txt");
 		system("my.exe < data.txt > my.txt");
 		if (system("fc my.txt other.txt")) {
-			cnt--;
-			if (cnt == 0) break;
+			break;
 		}
     }
 	return 0;
