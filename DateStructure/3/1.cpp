@@ -16,6 +16,7 @@ void getNext(char t[]) {
 		else j = next1[j];
 	}
 }
+
 int kmp(char s[], char t[], int pos) {
 	int i = pos, j = 1;
     n = strlen(s + 1);

@@ -33,7 +33,7 @@ ll f[N], g[N];//f遍历完子树增加多少体力，g体力为0遍历完子树�
 struct S1 {
     ll x, y;
     bool operator < (const S1 &b) const {
-        return y < b.y;
+        return y > b.y;
     } 
 };
 struct S2 {

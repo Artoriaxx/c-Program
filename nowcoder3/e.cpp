@@ -21,9 +21,10 @@ struct READ {
         return *this;
     }
 } in;
-
+const ll inf = 1e18;
 const int N = 2e5 + 50;
 int a[N];
+ll dp[N];
 int main() {
     int t; in >> t;
     while (t--) {
@@ -31,34 +32,22 @@ int main() {
         for (int i = 1; i <= n; i++) in >> a[i];
         sort(a + 1, a + n + 1);
         ll ans = 0;
-        for (int i = 1; i <= n; i+=2) {
-            ans += a[i + 1] - a[i];
-        }
-        ll res1 = 0, res2 = 0;
-        for (int i = 2; i <= n - 1; i+=2) {
-            res1 += a[i + 1] - a[i];
-        }
-        res1 += a[n] - a[1];
-        if (n % 4 == 0) {
-            ll res3 = 0;
-            for (int i = 1; i <= n; i++) {
-                if (i % 4 == 1 || i % 4 == 2) {
-                    res3 += a[i + 2] - a[i];
-                }
+        for (int i = 1; i <= n; i+=2) ans += a[i+1] - a[i];
+        for (int i = 1; i <= n; i++) dp[i] = inf;
+        dp[0] = 0;
+        for (int i = 4; i <= n; i++) {
+            if (dp[i - 4] != inf) {
+                int ba = i - 3;
+                ll cur = min(a[ba + 2] - a[ba] + a[ba + 3] - a[ba + 1], a[ba + 3] - a[ba] + a[ba + 2] - a[ba + 1]);
+                dp[i] = min(dp[i], dp[i - 4] + cur);
             }
-            ans += min(res1, res3);
-        }
-        else {
-            for (int i = 1; i <= n - 6; i++) {
-                if (i % 4 == 1 || i % 4 == 2) {
-                    res2 += a[i + 2] - a[i];
-                }
+            if (i - 6 >= 0 && dp[i - 6] != inf) {
+                int ba = i - 5;
+                ll cur = a[ba + 2] - a[ba + 1] + a[ba + 4] - a[ba + 3] + a[ba + 5] - a[ba];
+                dp[i] = min(dp[i], dp[i - 6] + cur);
             }
-            for (int i = n - 6; i <= n - 3; i++) {
-                res2 += a[i + 3] - a[i];
-            }
-            ans += min(res1, res2);
         }
+        ans = ans + dp[n];
         printf("%lld\n", ans);
     }
     return 0;

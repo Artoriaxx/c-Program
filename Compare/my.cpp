@@ -1,63 +1,89 @@
-#include<bits/stdc++.h>
-#define LL long long
-#define dl double
-void rd(int &x){
- x=0;int f=1;char ch=getchar();
- while(ch<'0' || ch>'9'){if(ch=='-')f=-1;ch=getchar();}
- while(ch<='9' && ch>='0')x=x*10+ch-'0',ch=getchar();x*=f;
-}
-void lrd(LL &x){
- x=0;int f=1;char ch=getchar();
- while(ch<'0' || ch>'9'){if(ch=='-')f=-1;ch=getchar();}
- while(ch<='9' && ch>='0')x=x*10+ch-'0',ch=getchar();x*=f;
-}
-const int INF=1e9;
-const LL LINF=1e18;
-const int N=15;
+#include <bits/stdc++.h>
 using namespace std;
-int n,T,mn;
-char s[N];
-int a[N];
-bool check(){
- int cnt1=0,cnt2=0,id1=0,id2=0;
- for(int i=0;i<n;i++)
-  if(a[i]){
-   cnt1++;
-   if(cnt1 == 3){
-    id1=i;break;
-   }
-  }
- for(int i=n-1;i>=0;i--)
-  if(!a[i]){
-   cnt2++;
-   if(cnt2 == 2){
-    id2=i;break;
-   }
-  }
- if(!id1 || !id2)return 1;
- return id1 > id2;
-}
-void dfs(int x,int y){
- if(x == n){
-  if(!check())return ;
-  mn=min(mn,y);
-  return ;
- }
- dfs(x+1,y);
- a[x]^=1;
- dfs(x+1,y+1);
- a[x]^=1;
-}
-int main(){
-// freopen("in.txt","r",stdin);
- rd(T);
- while(T--){
-  scanf("%s",s);n=strlen(s);
-  for(int i=0;i<n;i++)
-   if(s[i] == 'x')a[i]=1;
-   else a[i]=0;
-  mn=100;dfs(0,0);
-  printf("%d\n",mn);
- }
- return 0;
+typedef long long ll;
+typedef double db;
+struct READ {
+    inline char read() {
+    #ifdef Artoriax
+        return getchar();
+    #endif
+        const int LEN = 1 << 18 | 1;
+        static char buf[LEN], *s, *t;
+        return (s == t) && (t = (s = buf) + fread(buf, 1, LEN, stdin)), s == t ? -1 : *s++;
+    }
+    inline READ & operator >> (char *s) {
+        char ch;
+        while (isspace(ch = read()) && ~ch);
+        while (!isspace(ch) && ~ch) *s++ = ch, ch = read(); *s = '\0';
+        return *this;
+    }
+    inline READ & operator >> (string &s) {
+        s = ""; char ch;
+        while (isspace(ch = read()) && ~ch);
+        while (!isspace(ch) && ~ch) s += ch, ch = read();
+        return *this;
+    }
+    template <typename _Tp> inline READ & operator >> (_Tp&x) {
+        char ch, flag;
+        for(ch = read(),flag = 0; !isdigit(ch) && ~ch; ch = read()) flag |= ch == '-';
+        for(x = 0; isdigit(ch); ch = read()) x = x * 10 + (ch ^ '0');
+        flag && (x = -x);
+        return *this;
+    }
+} in;
+
+const int N = 2e5 + 50;
+int ans[N];
+int main() {
+    int tc; in >> tc;
+    for (int t = 1; t <= tc; t++) {
+        int n, a, b, c; in >> n >> a >> b >> c;
+        int h = n;
+        for (int i = 1; i <= 3 * n; i++) ans[i] = 0;
+        int cnt = 0;
+        for (int i = 1; i <= c; i++) {
+            ans[i + n] = h;
+            cnt++;
+        }
+        a -= c; b -= c;
+        int cntl = 0, cntr = 0;
+        int tmp = h;
+        for (int i = 1; i <= a; i++) {
+            h--;
+            ans[a - i + 1] = h;
+            cnt++;
+            cntl++;
+        }
+        h = tmp;
+        for (int i = 1; i <= b; i++) {
+            h--;
+            ans[3 * n - (b - i)] = h;
+            cnt++;
+            cntr++;
+        }
+        if (cnt > n || a < 0 || b < 0) {
+            //puts("-1");
+            printf("Case #%d: IMPOSSIBLE\n", t);
+        }
+        else {
+            
+            if (cntl == 0 && cntr == 0 && cnt == 1 && n - cnt > 0) {
+                
+                printf("Case #%d: IMPOSSIBLE\n", t);
+                continue;
+            }
+            printf("Case #%d:", t);
+            for (int i = 1; i <= 3 * n; i++) {
+                if (ans[i] != 0) printf(" %d", ans[i]);
+                if (i == n + 1) {
+                    h--;
+                    for (int j = 1; j <= n - cnt; j++) {
+                        printf(" %d", h);
+                    }
+                }
+            }
+            puts("");
+        }
+    }
+    return 0;
 }

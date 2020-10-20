@@ -70,7 +70,6 @@ void getAns(int x) {
         for (int i = 1; i <= n; i++) base[i] = tmp[base[i]];
         x >>= 1;
     }
-    
 }
 int main() {
     int m; in >> n >> m;

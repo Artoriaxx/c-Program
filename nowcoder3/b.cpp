@@ -1,70 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
+typedef double db;
 struct READ {
     inline char read() {
-    #ifdef _WIN32
+    #ifdef Artoriax
         return getchar();
     #endif
-        static const int IN_LEN = 1 << 18 | 1;
-        static char buf[IN_LEN], *s, *t;
-        return (s == t) && (t = (s = buf) + fread(buf, 1, IN_LEN, stdin)), s == t ? -1 : *s++;
+        const int LEN = 1 << 18 | 1;
+        static char buf[LEN], *s, *t;
+        return (s == t) && (t = (s = buf) + fread(buf, 1, LEN, stdin)), s == t ? -1 : *s++;
+    }
+    inline READ & operator >> (char *s) {
+        char ch;
+        while (isspace(ch = read()) && ~ch);
+        while (!isspace(ch) && ~ch) *s++ = ch, ch = read(); *s = '\0';
+        return *this;
+    }
+    inline READ & operator >> (string &s) {
+        s = ""; char ch;
+        while (isspace(ch = read()) && ~ch);
+        while (!isspace(ch) && ~ch) s += ch, ch = read();
+        return *this;
     }
     template <typename _Tp> inline READ & operator >> (_Tp&x) {
-        static char c11, boo;
-        for(c11 = read(),boo = 0; !isdigit(c11); c11 = read()) {
-            if(c11 == -1) return *this;
-            boo |= c11 == '-';
-        }
-        for(x = 0; isdigit(c11); c11 = read()) x = x * 10 + (c11 ^ '0');
-        boo && (x = -x);
+        char ch, flag;
+        for(ch = read(),flag = 0; !isdigit(ch) && ~ch; ch = read()) flag |= ch == '-';
+        for(x = 0; isdigit(ch); ch = read()) x = x * 10 + (ch ^ '0');
+        flag && (x = -x);
         return *this;
     }
 } in;
 
 const int N = 2e6 + 50;
 char s[N];
-struct node {
-    int l, r;
-    char val;
-} f[N];
 int main() {
-    scanf("%s", s + 1);
-    int len = strlen(s + 1);
-    int m; scanf("%d", &m);
+    in >> s;
+    int len = strlen(s);
+    int m; in >> m;
     int now = 0;
     while (m--) {
-        char ch[2];
-        scanf("%s", ch);
-        int x;
-        scanf("%d", &x);
-        if (ch[0] == 'M') {
-            now += x;
-            if (now >= len) now -= len;
-            if (now <= -len) now += len; 
-        }
+        char ch[2]; in >> ch;
+        int x; in >> x;
+        if (ch[0] == 'M') now = (now + x) % len;
         else {
-            if (now < 0) {
-                now = -now;
-                if (x <= now) {
-                    putchar(s[len - now + x]);
-                }
-                else {
-                    x -= now;
-                    putchar(s[x]);
-                }
-                now = -now;
-            }
-            else {
-                if (x <= (len - now)) {
-                    putchar(s[now + x]);
-                }
-                else {
-                    x -= (len - now);
-                    putchar(s[x]);
-                }
-            }
-            puts("");
+            int pos = (now + x - 1 + len) % len;
+            printf("%c\n", s[pos]);
         }
     }
     return 0;

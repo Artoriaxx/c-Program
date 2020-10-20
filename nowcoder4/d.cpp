@@ -34,21 +34,21 @@ bool cmp(int a[], int b[], int len) {
 void copy(int a[], int b[], int len) {
     for (int i = 1; i <= len; i++) a[i] = b[i];
 }
-void check(int i) {
-    for (int j = 1; j <= i; j++) cmn[j] = 9, cmx[j] = 0;
+void check(int len) {
+    for (int j = 1; j <= len; j++) cmn[j] = 9, cmx[j] = 0;
     for (int j = 1; j <= n; j++) {
-        if (j % i == 1 && s[j] == '0') return;
-        cnow[j % i == 0 ? i : j % i] = s[j] - '0';
-        if (j % i == 0) {
-            if (cmp(cnow, cmx, i)) copy(cmx, cnow, i);
-            if (cmp(cmn, cnow, i)) copy(cmn, cnow, i); 
+        if (j % len == 1 && s[j] == '0') return;
+        cnow[j % len == 0 ? len : j % len] = s[j] - '0';
+        if (j % len == 0) {
+            if (cmp(cnow, cmx, len)) copy(cmx, cnow, len);
+            if (cmp(cmn, cnow, len)) copy(cmn, cnow, len); 
         }
     }
     int mni = 9;
-    for (int j = i; j >= 1; j--) {
+    for (int j = len; j >= 1; j--) {
         int t = cmx[j] - cmn[j];
         if (t < 0) cmx[j - 1]--, t += 10;
-        if (j == i) mni = t;
+        if (j == len) mni = t;
         else if (t > 0) return;
     }
     ans = min(ans, mni);

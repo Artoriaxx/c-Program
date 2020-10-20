@@ -91,7 +91,8 @@
         "xmemory": "cpp",
         "xstddef": "cpp",
         "xxatomic": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "xlocmes": "cpp"
     },
     "C_Cpp.default.defines": [
         "Artoriax"

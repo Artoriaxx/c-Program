@@ -72,9 +72,8 @@ int main() {
                 f = b / d;
                 exgcd(f, d, c, e);
                 if (c < 0) {
-                    ll x = -c / d + 1;
-                    c += x * d;
-                    e -= x * f;
+                    swap(c, e);
+                    swap(d, f);
                 }
                 ll x = c / d;
                 c -= x * d;

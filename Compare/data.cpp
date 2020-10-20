@@ -8,19 +8,31 @@
  */
 #include<bits/stdc++.h>
 using namespace std;
+vector< vector<int> > ans;
 int main() {
 	srand(time(NULL));
-	int t = 10;
-	printf("%d\n", t);
-	while (t--) {
-		int n = rand() % 10 + 1;
-		for (int i = 1; i <= n; i++) {
-			int x = rand() % 2;
-			if (x == 1) putchar('x');
-			else putchar('l');
+	int tot = 0;
+	for (int i = 1; i <= 5; i++) {
+		for (int a = 1; a <= i; a++) {
+			for (int b = 1; b <= i; b++) {
+				for (int c = 1; c <= i; c++) {
+					tot++;
+					vector<int> tmp;
+					tmp.push_back(i);
+					tmp.push_back(a);
+					tmp.push_back(b);
+					tmp.push_back(c);
+					ans.push_back(tmp);
+				}
+			}
+		}
+	}
+	printf("%d\n", tot);
+	for (int i = 0; i < tot; i++) {
+		for (int j = 0; j < 4; j++) {
+			printf("%d ", ans[i][j]);
 		}
 		puts("");
-
 	}
 	return 0;
 }
